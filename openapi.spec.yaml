@@ -1,0 +1,38 @@
+openapi: "3.0.1"
+info:
+  title: "external-api"
+  version: "1.0"
+servers:
+- url: "https://hi6kdbr74g.execute-api.eu-west-1.amazonaws.com/{basePath}"
+  variables:
+    basePath:
+      default: "Prod"
+paths:
+  /{id}:
+    get:
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      x-amazon-apigateway-integration:
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:eu-west-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-west-1:837706914135:function:external-api-getByIdFunction-ogEXImYVkBla/invocations"
+        passthroughBehavior: "when_no_match"
+        type: "aws_proxy"
+  /:
+    get:
+      x-amazon-apigateway-integration:
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:eu-west-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-west-1:837706914135:function:external-api-getAllItemsFunction-qhFHwvxUEmnp/invocations"
+        passthroughBehavior: "when_no_match"
+        type: "aws_proxy"
+    post:
+      x-amazon-apigateway-integration:
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:eu-west-1:lambda:path/2015-03-31/functions/arn:aws:lambda:eu-west-1:837706914135:function:external-api-putItemFunction-tfKNK5Nriett/invocations"
+        passthroughBehavior: "when_no_match"
+        type: "aws_proxy"
+components: {}
+
